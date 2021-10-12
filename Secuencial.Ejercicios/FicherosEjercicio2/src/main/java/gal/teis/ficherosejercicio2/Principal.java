@@ -25,6 +25,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -38,6 +39,9 @@ public class Principal {
     public static void main(String[] args) throws IOException {
 
         Scanner input = new Scanner(System.in);
+        
+        JOptionPane panel = new JOptionPane();
+        panel.showInputDialog("Que tal");
 
         File fichero1 = new File("");
         fichero1 = buscarFichero(fichero1, "primer");
