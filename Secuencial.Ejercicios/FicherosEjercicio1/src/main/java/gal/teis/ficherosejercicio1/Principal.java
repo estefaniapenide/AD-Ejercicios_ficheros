@@ -24,8 +24,9 @@ public class Principal {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
-         File directorio = new File("directorio");
+    public static void main(String[] args) {
+        
+        File directorio = new File("directorio");
 
         File fichero1 = new File(directorio, "fichero1.txt");
         File fichero2 = new File(directorio, "fichero2.txt");
@@ -33,10 +34,14 @@ public class Principal {
 
         directorio.mkdir();
 
-        fichero1.createNewFile();
-        fichero2.createNewFile();
-        fichero3.createNewFile();
-        
+        try {
+            fichero1.createNewFile();
+            fichero2.createNewFile();
+            fichero3.createNewFile();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
         verInfoFichero(fichero1);
 
         String texto = "Esto es una prueba";
@@ -44,7 +49,7 @@ public class Principal {
         contenidoTextoSinEspacios(leerFichero(fichero1));
 
     }
-    
+
     public static void verInfoFichero(File fichero) {
         System.out.println("INFORMACIÓN DEL FICHERO");
 
@@ -70,7 +75,7 @@ public class Principal {
     }
 
     public static void verDirectorio(File fichero) {
-        
+
         File[] listaFicheros = fichero.listFiles();
         System.out.println("Ficheros en el directorio actual: " + listaFicheros.length);
         for (int i = 0; i < listaFicheros.length; i++) {
@@ -79,37 +84,45 @@ public class Principal {
         }
     }
 
-    public static StringBuilder leerFichero(File fichero) throws IOException {
+    public static StringBuilder leerFichero(File fichero) {
 
         StringBuilder textoFichero = new StringBuilder();
 
-        Reader lector = new FileReader(fichero, Charset.forName("UTF-8"));
-        char[] bufer = new char[1024];
-        while (lector.read(bufer) != -1) {
-            textoFichero.append(bufer);
+        try {
+            Reader lector = new FileReader(fichero, Charset.forName("UTF-8"));
+            char[] bufer = new char[1024];
+            while (lector.read(bufer) != -1) {
+                textoFichero.append(bufer);
+            }
+            lector.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-        lector.close();
 
         return textoFichero;
 
     }
-    
+
     //Puebras con BuffredReader y BufferedWriter
-     public static void leerFicheroConBufferedReaderEscribirloArchivoTemporalBufferedWriter(File fichero) throws IOException {
+    public static void leerFicheroConBufferedReaderEscribirloArchivoTemporalBufferedWriter(File fichero) {
 
         int texto;
-        
-        BufferedReader lector = new BufferedReader(new FileReader(fichero, Charset.forName("UTF-8")));
-        
         File ficheroTemporal = new File("ficheroTemporal.txt");
-        BufferedWriter escritor = new BufferedWriter(new FileWriter(ficheroTemporal, Charset.forName("UTF-8")));
-        
-        while ((texto=lector.read()) != -1) {
-            escritor.write(texto);
+        try {
+
+            BufferedReader lector = new BufferedReader(new FileReader(fichero, Charset.forName("UTF-8")));
+
+            BufferedWriter escritor = new BufferedWriter(new FileWriter(ficheroTemporal, Charset.forName("UTF-8")));
+
+            while ((texto = lector.read()) != -1) {
+                escritor.write(texto);
+            }
+            lector.close();
+            escritor.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-        lector.close();
-        escritor.close();
-        
+
         ficheroTemporal.deleteOnExit();
 
     }
@@ -125,13 +138,15 @@ public class Principal {
 
     }
 
-    public static void escribirEnFichero(File fichero, String texto) throws IOException {
+    public static void escribirEnFichero(File fichero, String texto) {
 
-        Writer escritor = new FileWriter(fichero);
-        escritor.write(texto);
-        escritor.close();
+        try {
+            Writer escritor = new FileWriter(fichero);
+            escritor.write(texto);
+            escritor.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
-
-    
