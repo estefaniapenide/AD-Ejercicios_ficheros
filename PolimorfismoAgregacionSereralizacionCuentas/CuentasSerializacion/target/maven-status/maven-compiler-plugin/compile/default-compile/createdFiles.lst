@@ -1,0 +1,7 @@
+POJO\Cuenta.class
+com\mycompany\cuentasserializacion\OperacionesCuentas.class
+POJO\CuentaCorriente.class
+POJO\CuentaPlazo.class
+com\mycompany\cuentasserializacion\Principal.class
+POJO\Movimiento.class
+POJO\Cliente.class
