@@ -5,6 +5,7 @@
  */
 package POJO;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -21,8 +22,8 @@ public class CuentaPlazo extends Cuenta {
 
     }
 
-    public CuentaPlazo(String numero, String sucursal) {
-        super(numero, sucursal);
+    public CuentaPlazo(String numero, String sucursal,ArrayList<Cliente> clientes) {
+        super(numero, sucursal,clientes);
     }
     
         /**
@@ -65,6 +66,21 @@ public class CuentaPlazo extends Cuenta {
      */
     public void setDepositoPlazo(long depositoPlazo) {
         this.depositoPlazo = depositoPlazo;
+    }
+    
+     @Override
+    public String toString() {
+        String nombresClientes="";
+        for(Cliente aux : getClientes()){
+        nombresClientes=nombresClientes+aux.getNombre()+"\n";
+        }
+        String cuenta = "\nCUENTA PLAZO"
+                + "\nNúmero de cuenta: " + getNumero()
+                + "\nSucursal: " + getSucursal()
+                + "\nDepósito(€): " + getDepositoPlazo()
+                + "\nClientes:\n" + nombresClientes + "\n";
+
+        return cuenta;
     }
 
 }

@@ -5,26 +5,27 @@
  */
 package POJO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author a20estefaniapc
  */
-public class Cuenta {
-    //Hacer que dos cuentas sean iguales si tienen el mismo número de cuenta
+public abstract class Cuenta implements Serializable{
 
     public String numero;
     public String sucursal;
-    public ArrayList<Cliente> clientes;
+    public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
     public Cuenta() {
 
     }
 
-    public Cuenta(String numero, String sucursal) {
+    public Cuenta(String numero, String sucursal,ArrayList<Cliente> clientes) {
         this.numero = numero;
         this.sucursal = sucursal;
+        this.clientes=clientes;
     }
 
     //getters y setters

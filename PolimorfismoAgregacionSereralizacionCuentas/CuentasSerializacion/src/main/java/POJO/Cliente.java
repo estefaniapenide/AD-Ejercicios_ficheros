@@ -5,26 +5,28 @@
  */
 package POJO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author a20estefaniapc
  */
-public class Cliente {
+public class Cliente implements Serializable {
 
-    public String dni;
-    public String nombre;
-    public String direccion;
-    public ArrayList<Cuenta> cuentas;
+    public String dni = "";
+    public String nombre = "";
+    public String direccion = "";
+    public ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
 
     public Cliente() {
 
     }
 
-    public Cliente(String dni, String nombre) {
+    public Cliente(String dni, String nombre,ArrayList<Cuenta> cuentas) {
         this.dni = dni;
         this.nombre = nombre;
+        this.cuentas=cuentas;
     }
 
     /**
@@ -81,5 +83,15 @@ public class Cliente {
      */
     public void setCuentas(ArrayList<Cuenta> cuentas) {
         this.cuentas = cuentas;
+    }
+
+    @Override
+    public String toString() {
+        String cliente = "\nCLIENTE"
+                + "\nDNI: " + getDni()
+                + "\nNombre: " + getNombre()
+                + "\nDirección: " + getDireccion() + "\n";
+
+        return cliente;
     }
 }

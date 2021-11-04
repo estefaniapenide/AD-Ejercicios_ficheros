@@ -15,14 +15,14 @@ import java.util.ArrayList;
 public class CuentaCorriente extends Cuenta implements Serializable{
     
     public double saldoActual;
-    public ArrayList<Movimiento> movimientos;
+    public ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
 
     public CuentaCorriente() {
         super();
     }
 
-    public CuentaCorriente(String numero, String sucursal) {
-        super(numero, sucursal);
+    public CuentaCorriente(String numero, String sucursal,ArrayList<Cliente> clientes) {
+        super(numero, sucursal,clientes);
     }
 
     /**
@@ -33,10 +33,10 @@ public class CuentaCorriente extends Cuenta implements Serializable{
     }
 
     /**
-     * @param saldoActual the saldoActual to set
+     * 
      */
-    public void setSaldoActual(double saldoActual) {
-        this.saldoActual = saldoActual;
+    public void setSaldoActual() {
+        this.saldoActual = this.saldoActual+movimientos.get(movimientos.size()-1).getSaldoActual();
     }
 
     /**
@@ -51,6 +51,21 @@ public class CuentaCorriente extends Cuenta implements Serializable{
      */
     public void setMovimientos(ArrayList<Movimiento> movimientos) {
         this.movimientos = movimientos;
+    }
+    
+     @Override
+    public String toString() {
+        String nombresClientes="";
+        for(Cliente aux : getClientes()){
+        nombresClientes=nombresClientes+aux.getNombre()+"\n";
+        }
+        String cuenta = "\nCUENTA CORRIENTE"
+                + "\nNúmero de cuenta: " + getNumero()
+                + "\nSucursal: " + getSucursal()
+                + "\nSaldo(€): " + getSaldoActual()
+                + "\nClientes:\n " + nombresClientes + "\n";
+
+        return cuenta;
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package POJO;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
@@ -12,22 +13,25 @@ import java.util.Date;
  *
  * @author a20estefaniapc
  */
-public class Movimiento {
+public abstract class Movimiento implements Serializable{
     
-    public CuentaCorriente cuenta;
-    public Date fechaOperacion;
-    public Time hora;
-    public float cantidad;
-    public double saldoActual;
+    private CuentaCorriente cuenta;
+    private Date fechaOperacion;
+    private Time hora;
+    private float cantidad;
+    
     
     public Movimiento(){
     
     }
     
-    public Movimiento(CuentaCorriente cuenta){
+    public Movimiento(CuentaCorriente cuenta,Date fechaOperacion, Time hora, float cantidad){
         this.cuenta=cuenta;
-    
+        this.fechaOperacion=fechaOperacion;
+        this.hora=hora;
+        this.cantidad=cantidad;
     }
+
 
     /**
      * @return the cuenta
@@ -85,19 +89,23 @@ public class Movimiento {
         this.cantidad = cantidad;
     }
 
-    /**
-     * @return the saldoActual
-     */
-    public double getSaldoActual() {
-        return saldoActual;
-    }
-
-    /**
-     * @param saldoActual the saldoActual to set
-     */
-    public void setSaldoActual(double saldoActual) {
-        this.saldoActual = saldoActual;
-    }
+    public abstract double getSaldoActual();
+    public abstract void setSaldoActual();
     
-    
+    @Override
+    public String toString(){
+        String tipo="";
+        if (this instanceof Ingreso) {
+            tipo = "INGRESO";
+        } else if (this instanceof Retirada) {
+            tipo = "RETIRADA";
+        }
+        String movimiento="MOVIMIENTO\n"
+                +"TIPO: "+tipo+"\n"
+                +"Cuenta: "+cuenta.getNumero()+"\n"
+                +"Fecha: "+fechaOperacion+"\n"
+                +"Hora: "+hora+"\n"
+                +"Cantidad(€): "+cantidad+"\n";
+    return movimiento;
+    }
 }
