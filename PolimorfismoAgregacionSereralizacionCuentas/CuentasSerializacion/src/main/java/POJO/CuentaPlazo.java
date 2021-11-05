@@ -78,7 +78,8 @@ public class CuentaPlazo extends Cuenta {
                 + "\nNúmero de cuenta: " + getNumero()
                 + "\nSucursal: " + getSucursal()
                 + "\nDepósito(€): " + getDepositoPlazo()
-                + "\nClientes:\n" + nombresClientes + "\n";
+                 + "\nClientes:\n " + nombresClientes + "\n";
+       // + "\nClientes:\n " + getClientes() + "\n";
 
         return cuenta;
     }

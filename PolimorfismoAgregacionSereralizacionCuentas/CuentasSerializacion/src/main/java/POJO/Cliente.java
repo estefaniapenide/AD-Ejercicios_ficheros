@@ -23,10 +23,10 @@ public class Cliente implements Serializable {
 
     }
 
-    public Cliente(String dni, String nombre,ArrayList<Cuenta> cuentas) {
+    public Cliente(String dni, String nombre, ArrayList<Cuenta> cuentas) {
         this.dni = dni;
         this.nombre = nombre;
-        this.cuentas=cuentas;
+        this.cuentas = cuentas;
     }
 
     /**
@@ -90,7 +90,8 @@ public class Cliente implements Serializable {
         String cliente = "\nCLIENTE"
                 + "\nDNI: " + getDni()
                 + "\nNombre: " + getNombre()
-                + "\nDirección: " + getDireccion() + "\n";
+                + "\nDirección: " + getDireccion() + "\n"
+                + "\nCuentas: " + getCuentas() + "\n";
 
         return cliente;
     }

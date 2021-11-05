@@ -64,6 +64,7 @@ public class CuentaCorriente extends Cuenta implements Serializable{
                 + "\nSucursal: " + getSucursal()
                 + "\nSaldo(€): " + getSaldoActual()
                 + "\nClientes:\n " + nombresClientes + "\n";
+       // + "\nClientes:\n " + getClientes() + "\n";
 
         return cuenta;
     }

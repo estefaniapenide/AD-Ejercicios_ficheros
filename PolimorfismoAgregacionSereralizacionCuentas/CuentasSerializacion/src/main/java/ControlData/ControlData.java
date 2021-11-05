@@ -15,6 +15,55 @@ import java.util.regex.Pattern;
  */
 public class ControlData {
 
+    public static String leerFecha(Scanner sc) {
+
+        String fecha = null;
+        boolean fechaValida = true;
+        do {
+            fecha = sc.nextLine();
+            Pattern pat = Pattern.compile("[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}");
+            Matcher mat = pat.matcher(fecha);
+            if (mat.matches()) {
+                int dia = Integer.parseInt(Character.toString(fecha.charAt(0)) + Character.toString(fecha.charAt(1)));
+                int mes = Integer.parseInt(Character.toString(fecha.charAt(3)) + Character.toString(fecha.charAt(4)));
+                int ano = Integer.parseInt(Character.toString(fecha.charAt(6)) + Character.toString(fecha.charAt(7)) + Character.toString(fecha.charAt(8)) + Character.toString(fecha.charAt(9)));
+                if (mes > 12 || mes < 1) {
+                    fechaValida = false;
+                } else if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) {
+                    if (dia > 31 || dia < 1) {
+                        fechaValida = false;
+                    } else {
+                        fechaValida = true;
+                    }
+                } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+                    if (dia > 30 || dia < 1) {
+                        fechaValida = false;
+                    } else {
+                        fechaValida = true;
+                    }
+                } else if (mes == 2) {
+                    if (((ano % 4 == 0) && ((ano % 100 != 0) || (ano % 400 == 0))) && (dia <= 29 && dia > 0)) {
+                        fechaValida = true;
+                    } else if (dia <= 28 && dia > 0) {
+                        fechaValida = true;
+                    } else {
+                        fechaValida = false;
+                    }
+                }
+
+            } else {
+                fechaValida = false;
+            }
+            if (!fechaValida) {
+                System.out.println("ERROR. No ha introducido una fecha válida.\nEscriba otra fecha. Formato: dd/mm/yyyy");
+            }
+
+        } while (!fechaValida);
+
+        return fecha;
+
+    }
+
     public static String leerDni(Scanner sc) {
 
         char[] letras = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
@@ -22,7 +71,7 @@ public class ControlData {
         boolean dniValido = true;
         do {
             dni = sc.nextLine();
-            dni=dni.toUpperCase();
+            dni = dni.toUpperCase();
             if (dni.length() != 9) {
                 dniValido = false;
             } else {

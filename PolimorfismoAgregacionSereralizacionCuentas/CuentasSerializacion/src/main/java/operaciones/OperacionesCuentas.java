@@ -10,6 +10,7 @@ import POJO.Cuenta;
 import POJO.CuentaCorriente;
 import POJO.CuentaPlazo;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,7 +68,7 @@ public class OperacionesCuentas {
 
         CuentaCorriente cuenta;
 
-        cuenta = new CuentaCorriente(numeroCuenta, sucursal,clientes);
+        cuenta = new CuentaCorriente(numeroCuenta, sucursal, clientes);
         getListaTodasCuentas().add(cuenta);
 
         return cuenta;
@@ -77,18 +78,18 @@ public class OperacionesCuentas {
 
         CuentaPlazo cuenta;
 
-        cuenta = new CuentaPlazo(numeroCuenta, sucursal,clientes);
+        cuenta = new CuentaPlazo(numeroCuenta, sucursal, clientes);
         getListaTodasCuentas().add(cuenta);
 
         return cuenta;
 
     }
 
-    public static Cliente altaCliente(String dni, String nombre,ArrayList<Cuenta> cuentas) {
-        
+    public static Cliente altaCliente(String dni, String nombre, ArrayList<Cuenta> cuentas) {
+
         Cliente cliente;
 
-        cliente = new Cliente(dni, nombre,cuentas);
+        cliente = new Cliente(dni, nombre, cuentas);
         getListaTodosClientes().add(cliente);
 
         return cliente;
@@ -163,6 +164,17 @@ public class OperacionesCuentas {
         return clienteYaEnCuenta;
     }
 
+    public static Cliente encontrarCliente(Cliente cliente) {
+
+        Cliente c = null;
+        for (Cliente aux : getListaTodosClientes()) {
+            if (aux == cliente) {
+                c = aux;
+            }
+        }
+        return c;
+    }
+
     public static Cliente encontrarCliente(String dni) {
 
         Cliente cliente = null;
@@ -172,6 +184,17 @@ public class OperacionesCuentas {
             }
         }
         return cliente;
+    }
+    
+       public static Cuenta encontrarCuenta(Cuenta cuenta) {
+
+        Cuenta c = null;
+        for (Cuenta aux : getListaTodasCuentas()) {
+            if (aux == cuenta) {
+                c = aux;
+            }
+        }
+        return c;
     }
 
     public static Cuenta encontrarCuenta(String numeroCuenta) {
@@ -184,16 +207,112 @@ public class OperacionesCuentas {
         }
         return cuenta;
     }
-    
-        public static CuentaCorriente encontrarCuentaCorriente(String numeroCuenta) {
+
+    public static CuentaCorriente encontrarCuentaCorriente(String numeroCuenta) {
 
         CuentaCorriente cuenta = null;
         for (Cuenta aux : getListaTodasCuentas()) {
             if (aux.getNumero().equals(numeroCuenta)) {
-                cuenta = (CuentaCorriente)aux;
+                cuenta = (CuentaCorriente) aux;
             }
         }
         return cuenta;
+    }
+
+    public static void borrarCuenta(String numeroCuenta) {
+        //Borra la cuenta de la lista de cuentas de un cliente
+        for (Cliente aux : encontrarCuenta(numeroCuenta).getClientes()) {
+            for (int i = 0; i < encontrarCliente(aux).getCuentas().size(); i++) {
+                encontrarCliente(aux).getCuentas().set(i, null);
+                encontrarCliente(aux).getCuentas().remove(i);
+            }
+        }
+        //Borra la cuenta de la lista general
+        for (int i = 0; i < getListaTodasCuentas().size(); i++) {
+            if (getListaTodasCuentas().get(i).getNumero().equals(numeroCuenta)) {
+                getListaTodasCuentas().set(i, null);
+                getListaTodasCuentas().remove(i);
+            }
+        }
+    }
+
+    public static void borrarClientesSinCuentas() {
+        //Si un cliente no tiene cuentas asocidas, se borrará.
+        for (Cliente aux : getListaTodosClientes()) {
+
+            if (encontrarCliente(aux).getCuentas().isEmpty()) {
+                String dni = encontrarCliente(aux).getDni();
+          
+                for (int j = 0; j < getListaTodosClientes().size(); j++) {
+                    if (getListaTodosClientes().get(j).getDni().equals(dni)) {
+                        getListaTodosClientes().set(j, null);
+                    }
+                }
+
+            }
+        }
+        
+        limpiarListaClientesDeNulles();
+    }
+
+    public static void limpiarListaClientesDeNulles() {
+        
+        //Al borrar los clientes sin cuentas, este deja un rastro de nulles en la listaTodosClientes. Este método los elimina.
+        for (int i = 0; i < getListaTodosClientes().size(); i++) {
+            if (Objects.isNull(getListaTodosClientes().get(i))) {
+                getListaTodosClientes().remove(i);
+            }
+        }
+    }
+    
+    
+    public static void borrarClienteDeUnaCuenta(String dni){
+        
+         //Borra el cliente de la lista de clientes de una cuenta
+        for (Cuenta aux : encontrarCliente(dni).getCuentas()) {
+            for (int i = 0; i < encontrarCuenta(aux).getClientes().size(); i++) {
+                encontrarCuenta(aux).getClientes().set(i, null);
+                encontrarCuenta(aux).getClientes().remove(i);
+            }
+        }
+        
+        //Borra el cliente de la lista general
+        for (int i = 0; i < getListaTodosClientes().size(); i++) {
+            if (getListaTodosClientes().get(i).getDni().equals(dni)) {
+                getListaTodosClientes().set(i, null);
+                getListaTodosClientes().remove(i);
+            }
+        }
+    
+        
+    }
+    
+       public static void borrarCuentasSinClientes() {
+        //Si una cuenta no tiene clientes asociados, se borrará.
+        for (Cuenta aux : getListaTodasCuentas()) {
+
+            if (encontrarCuenta(aux).getClientes().isEmpty()) {
+                String numeroCuenta = encontrarCuenta(aux).getNumero();
+
+                for (int j = 0; j < getListaTodasCuentas().size(); j++) {
+                    if (getListaTodasCuentas().get(j).getNumero().equals(numeroCuenta)) {
+                        getListaTodasCuentas().set(j, null);
+                    }
+                }
+
+            }
+        }
+
+    }
+       
+          public static void limpiarListaCuentasDeNulles() {
+        
+        //Al borrar las cuentas sin clientes, este deja un rastro de nulles en la listaTodasCuentas. Este método los elimina.
+        for (int i = 0; i < getListaTodasCuentas().size(); i++) {
+            if (Objects.isNull(getListaTodasCuentas().get(i))) {
+                getListaTodasCuentas().remove(i);
+            }
+        }
     }
 
 }

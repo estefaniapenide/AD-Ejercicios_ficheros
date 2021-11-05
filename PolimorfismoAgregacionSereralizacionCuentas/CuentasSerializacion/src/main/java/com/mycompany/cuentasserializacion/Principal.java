@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -102,8 +104,49 @@ public class Principal {
                     movimentos(input);
                     break;
                 case 3:
+                    int b = 0;
+                    do {
+                        System.out.println(menuBajas());
+                        b = ControlData.leerInt(input);
+                        switch (b) {
+                            case 1:
+                                bajaCuenta(input);
+                                break;
+                            case 2:
+
+                                break;
+                            case 0:
+                                System.out.println("Volviendo al menú anterior...\n");
+                                break;
+                            default:
+                                System.out.println("No ha introducido ninguna de las opciones.");
+                                break;
+                        }
+                    } while (b != 0);
                     break;
                 case 4:
+                    int c = 0;
+                    do {
+                        System.out.println(menuModificaciones());
+                        c = ControlData.leerInt(input);
+                        switch (c) {
+                            case 1:
+                                modificarDniCliente(input);
+                                break;
+                            case 2:
+                                modificarNombreCliente(input);
+                                break;
+                            case 3:
+                                modificarDireccionCliente(input);
+                                break;
+                            case 0:
+                                System.out.println("Volviendo al menú anterior...\n");
+                                break;
+                            default:
+                                System.out.println("No ha introducido ninguna de las opciones.");
+                                break;
+                        }
+                    } while (c != 0);
                     break;
                 case 5:
                     int d = 0;
@@ -166,7 +209,7 @@ public class Principal {
 
             System.out.println("Sucursal:");
             String sucursal = ControlData.leerString(input);
- 
+
             String dni = "";
             ArrayList<Cliente> clientesCuenta = new ArrayList<Cliente>();
             OperacionesCuentas.altaCuentaCorriente(numeroCuenta, sucursal, clientesCuenta);
@@ -300,7 +343,7 @@ public class Principal {
                         System.out.println("Cantidad a retirar(€):");
                         cantidad = ControlData.leerFloat(input);
                         if (cantidad > OperacionesCuentas.encontrarCuentaCorriente(numeroCuenta).getSaldoActual()) {
-                            System.out.println("\nOPERACIÓN NO PERMITIDA.\nNo peude retirar una cantidad superior al saldo disponible.");
+                            System.out.println("\nOPERACIÓN NO PERMITIDA.\nNo puede retirar una cantidad superior al saldo disponible.");
                         } else {
                             fecha = new Date(new java.util.Date().getTime());
                             hora = new Time(fecha.getTime());
@@ -322,8 +365,96 @@ public class Principal {
         }
     }
 
+    public static void bajaCuenta(Scanner input) {
+        System.out.println("BAJA CUENTA");
+
+        System.out.println("Introduzca el número de cuenta:");
+        String numeroCuenta = ControlData.leerString(input);
+        if (!OperacionesCuentas.cuentaRegistrada(numeroCuenta)) {
+            System.out.println("La cuenta " + numeroCuenta + " no existe.");
+        } else {
+            OperacionesCuentas.borrarCuenta(numeroCuenta);
+            OperacionesCuentas.borrarClientesSinCuentas();
+            System.out.println("La cuenta " + numeroCuenta + " ha sido dada de baja junto con los clientes que sólo estaban asociados a ella.");
+        }
+    }
+
+    public static void bajaCliente(Scanner input) {
+        System.out.print("BAJA CLIENTE DE UNA CUENTA");
+
+        //Seguramente los tres ultimos métodos de operacionesCuentas no valen. Revisar y razonar bien!!!
+        System.out.println("DNI cliente: ");
+        String dni = ControlData.leerString(input);
+        dni = dni.toUpperCase();
+        if (!OperacionesCuentas.clienteRegistrado(dni)) {
+            System.out.println("El cliente " + dni + " no está registrado.");
+        } else {
+            System.out.println("Escoja la cuenta de la que quiere darse de baja:");
+            for (Cuenta aux : OperacionesCuentas.encontrarCliente(dni).getCuentas()) {
+                int i = 1;
+                System.out.println(i + ".-" + aux.getNumero());
+                i++;
+            }
+        }
+
+    }
+
+    public static void modificarDniCliente(Scanner input) {
+        System.out.println("MODIFICAR DNI CLIENTE");
+
+        System.out.println("DNI cliente: ");
+        String dni = ControlData.leerString(input);
+        dni = dni.toUpperCase();
+        if (!OperacionesCuentas.clienteRegistrado(dni)) {
+            System.out.println("El cliente " + dni + " no está registrado.");
+        } else {
+            System.out.println(OperacionesCuentas.encontrarCliente(dni));
+            System.out.println("Nuevo DNI: ");
+            String dniNuevo = ControlData.leerDni(input);
+            OperacionesCuentas.encontrarCliente(dni).setDni(dniNuevo);
+            System.out.println(OperacionesCuentas.encontrarCliente(dniNuevo));
+        }
+
+    }
+
+    public static void modificarNombreCliente(Scanner input) {
+        System.out.println("MODIFICAR NOMBRE CLIENTE");
+
+        System.out.println("DNI cliente: ");
+        String dni = ControlData.leerString(input);
+        dni = dni.toUpperCase();
+        if (!OperacionesCuentas.clienteRegistrado(dni)) {
+            System.out.println("El cliente " + dni + " no está registrado.");
+        } else {
+            System.out.println(OperacionesCuentas.encontrarCliente(dni));
+            System.out.println("Nuevo nombre: ");
+            String nombre = ControlData.leerString(input);
+            OperacionesCuentas.encontrarCliente(dni).setNombre(nombre);
+            System.out.println(OperacionesCuentas.encontrarCliente(dni));
+        }
+
+    }
+
+    public static void modificarDireccionCliente(Scanner input) {
+        System.out.println("MODIFICAR DIRECCIÓN CLIENTE");
+
+        System.out.println("DNI cliente: ");
+        String dni = ControlData.leerString(input);
+        dni = dni.toUpperCase();
+        if (!OperacionesCuentas.clienteRegistrado(dni)) {
+            System.out.println("El cliente " + dni + " no está registrado.");
+        } else {
+            System.out.println(OperacionesCuentas.encontrarCliente(dni));
+            System.out.println("Nueva Dirección: ");
+            String direccion = ControlData.leerString(input);
+            OperacionesCuentas.encontrarCliente(dni).setDireccion(direccion);
+            System.out.println(OperacionesCuentas.encontrarCliente(dni));
+        }
+
+    }
+
     public static void clientesDeUnaCuenta(Scanner input) {
-        
+
         System.out.println("CLIENTES DE UNA CUENTA");
 
         System.out.println("Introduzca el número de cuenta:");
@@ -338,11 +469,12 @@ public class Principal {
     }
 
     public static void cuentasDeUnCliente(Scanner input) {
-        
+
         System.out.println("CUENTAS DE UN CLIENTE");
 
         System.out.println("DNI cliente: ");
         String dni = ControlData.leerString(input);
+        dni = dni.toUpperCase();
         if (!OperacionesCuentas.clienteRegistrado(dni)) {
             System.out.println("El cliente " + dni + " no está registrado.");
         } else {
@@ -353,21 +485,48 @@ public class Principal {
     }
 
     public static void moviminetosCuenta(Scanner input) {
-        
+
         System.out.println("MOVIMIENTOS DE UNA CUENTA");
 
         System.out.println("Introduzca el número de cuenta:");
         String numeroCuenta = ControlData.leerString(input);
         if (!OperacionesCuentas.cuentaRegistrada(numeroCuenta)) {
-            System.out.println("La cuenta " + numeroCuenta + " no existe.");
+            System.out.println("La cuenta " + numeroCuenta + " no existe.\n");
         } else if (!(OperacionesCuentas.encontrarCuenta(numeroCuenta) instanceof CuentaCorriente)) {
             System.out.println(numeroCuenta + " NO es una CUENTA CORRIENTE.\nNo se ha podido realizar movimientos en la misma.\n");
         } else {
-            System.out.println("Movimientos de la cuenta " + numeroCuenta);
+            System.out.println("\nMOVIMIENTOS CUENTA " + numeroCuenta + ":");
             if (OperacionesCuentas.encontrarCuentaCorriente(numeroCuenta).getMovimientos().isEmpty()) {
-                System.out.println("NO hay movimientos.");
+                System.out.println("NO hay movimientos.\n");
             } else {
-                System.out.println(OperacionesCuentas.encontrarCuentaCorriente(numeroCuenta).getMovimientos());
+                try {
+                    Date inicio = null;
+                    Date fin = null;
+                    do {
+                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                        System.out.println("Desde (dd/mm/yyyy):");
+                        String desde = ControlData.leerFecha(input);
+                        inicio = formato.parse(desde);
+
+                        System.out.println("Hasta* (dd/mm/yyyy):\n*(los movimentos de este día no están incluídos)");
+                        String hasta = ControlData.leerFecha(input);
+                        fin = formato.parse(hasta);
+
+                        if (inicio.compareTo(fin) >= 0) {
+                            System.out.println("ERROR. La fecha inicio debe ser anterior a la de fin.\nNUNCA igual ni posterior.\n");
+                        }
+                    } while (inicio.compareTo(fin) >= 0);
+
+                    System.out.println("\nMOVIMIENTOS CUENTA " + numeroCuenta + ":");
+                    for (Movimiento aux : OperacionesCuentas.encontrarCuentaCorriente(numeroCuenta).getMovimientos()) {
+                        if (inicio.before(aux.getFechaOperacion()) && fin.after(aux.getFechaOperacion())) {
+                            System.out.println(aux);
+                        }
+                    }
+                    System.out.println("\n");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -395,9 +554,8 @@ public class Principal {
 
     public static String menuBajas() {
         String menuBajas = "BAJAS FÍSICAS\n"
-                + "1.-Cuenta corriente\n"
-                + "2.-Cuenta plazo\n"
-                + "3.-Cliente en una cuenta\n\n"
+                + "1.-Cuenta\n"
+                + "2.-Cliente en una cuenta\n\n"
                 + "0.-Volver al menú principal\n";
         return menuBajas;
     }
@@ -407,6 +565,15 @@ public class Principal {
                 + "1.-Clientes de una cuenta\n"
                 + "2.-Cuentas de un cliente\n"
                 + "3.-Movimientos de una cuenta\n\n"
+                + "0.-Volver al menú principal\n";
+        return menuBajas;
+    }
+
+    public static String menuModificaciones() {
+        String menuBajas = "MODIFICACIONES\n"
+                + "1.-Modificar DNI\n"
+                + "2.-Modificar nombre\n"
+                + "3.-Añadir/Modificar dirección\n\n"
                 + "0.-Volver al menú principal\n";
         return menuBajas;
     }
