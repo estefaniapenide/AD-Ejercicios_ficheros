@@ -14,7 +14,13 @@ import java.util.regex.Pattern;
  * @author a20estefaniapc
  */
 public class ControlData {
-
+    
+    /**
+     * Comprueba que una fecha está escrita en formato dd/mm/aaaa y que es válida.
+     * 
+     * @param sc Tipo Scanner
+     * @return Tipo String - la fecha introducida
+     */
     public static String leerFecha(Scanner sc) {
 
         String fecha = null;
@@ -63,7 +69,13 @@ public class ControlData {
         return fecha;
 
     }
-
+    
+    /**
+     * Comprueba que un dni es válido.
+     * 
+     * @param sc Tipo Scanner
+     * @return Tipo String - el dni introducido pasado a mayúsculas
+     */
     public static String leerDni(Scanner sc) {
 
         char[] letras = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};

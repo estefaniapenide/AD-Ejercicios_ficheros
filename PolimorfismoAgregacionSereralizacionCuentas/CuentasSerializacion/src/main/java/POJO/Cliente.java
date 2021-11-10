@@ -13,16 +13,27 @@ import java.util.ArrayList;
  * @author a20estefaniapc
  */
 public class Cliente implements Serializable {
-
-    public String dni = "";
-    public String nombre = "";
-    public String direccion = "";
-    public ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
-
+    
+    //atributos
+    private String dni = "";
+    private String nombre = "";
+    private String direccion = "";
+    private ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
+    
+    //conestructores
+    /**
+     * Constructor vacío.
+     */
     public Cliente() {
 
     }
-
+    
+    /**
+     * Constructor
+     * @param dni
+     * @param nombre
+     * @param cuentas 
+     */
     public Cliente(String dni, String nombre, ArrayList<Cuenta> cuentas) {
         this.dni = dni;
         this.nombre = nombre;
@@ -87,11 +98,16 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
+        String cuentas=" ";
+        for(Cuenta aux : getCuentas()){
+        cuentas=cuentas+aux.getNumero()+"\n ";
+        }
+        
         String cliente = "\nCLIENTE"
                 + "\nDNI: " + getDni()
                 + "\nNombre: " + getNombre()
-                + "\nDirección: " + getDireccion() + "\n"
-                + "\nCuentas: " + getCuentas() + "\n";
+                + "\nDirección: " + getDireccion()
+                + "\nCuentas:\n" + cuentas;
 
         return cliente;
     }

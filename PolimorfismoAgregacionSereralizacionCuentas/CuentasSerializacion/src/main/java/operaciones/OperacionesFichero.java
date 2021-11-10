@@ -21,7 +21,13 @@ import java.util.ArrayList;
  * @author a20estefaniapc
  */
 public class OperacionesFichero {
-
+    
+    /**
+     * Lee el fichero recuperendo el arryalist con todas las cuentas.
+     * @param fichero
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     public static void leerFichero(File fichero) throws IOException, ClassNotFoundException {
 
         FileInputStream fis = new FileInputStream(fichero);
@@ -33,7 +39,10 @@ public class OperacionesFichero {
         ois.close();
 
     }
-
+    
+    /**
+     * Guarda todos los clientes asociados a las cuentas de la lista general de cuentas y los guarda en la lista general de clientes.
+     */
     public static void guardarClientesEnListaTodosClientes() {
 
         for (Cuenta cuenta : OperacionesCuentas.getListaTodasCuentas()) {
@@ -45,7 +54,13 @@ public class OperacionesFichero {
 
         }
     }
-
+    
+    /**
+     * Reescribe el fichero con la lista general de cuentas.
+     * @param fichero
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public static void escribirFichero(File fichero) throws FileNotFoundException, IOException {
 
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fichero));

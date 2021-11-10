@@ -11,19 +11,32 @@ import java.util.Date;
  *
  * @author Estefania
  */
-public class Retirada extends Movimiento{
-    
-        private double saldoActual;
-    
-        public Retirada() {
+public class Retirada extends Movimiento {
+
+    //atributos
+    private double saldoActual;
+
+    //constructores
+    /**
+     * Constructor vacío
+     */
+    public Retirada() {
         super();
     }
 
+    /**
+     * Constructor
+     *
+     * @param cuenta
+     * @param fechaOperacion
+     * @param hora
+     * @param cantidad
+     */
     public Retirada(CuentaCorriente cuenta, Date fechaOperacion, Time hora, float cantidad) {
         super(cuenta, fechaOperacion, hora, cantidad);
     }
-    
-     /**
+
+    /**
      * @return the saldoActual
      */
     @Override
@@ -35,5 +48,5 @@ public class Retirada extends Movimiento{
     public void setSaldoActual() {
         saldoActual = saldoActual - getCantidad();
     }
-    
+
 }

@@ -11,8 +11,13 @@ package POO;
  */
 public class Atico extends Piso{
     
-    public float metrosTerraza;
+    //atributos
+    private float metrosTerraza;
     
+    //cosntructores
+    /**
+     * Constructor vacío
+     */
     public Atico(){
     super();
     }
@@ -31,7 +36,7 @@ public class Atico extends Piso{
         this.metrosTerraza = metrosTerraza;
     }
     
-    
+    @Override
     public float totalRbo(){
         float totalRbo=getCuotaFija()+getLitrosAguaCaliente()*0.4f+getPasosDeCalefaccion()*0.7f+metrosTerraza*0.45f;
     return totalRbo;

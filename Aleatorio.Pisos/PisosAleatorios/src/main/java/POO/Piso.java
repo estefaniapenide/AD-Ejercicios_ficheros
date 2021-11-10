@@ -11,14 +11,19 @@ package POO;
  */
 public abstract class Piso {
     
-     public String referencia;
-     public char tipoPiso;
-     public String nombrePropietario;
-     public float cuotaFija;
-     public float litrosAguaCaliente;
-     public float pasosDeCalefaccion;
-     public float TotalReciboComunidad;
+    //atributos
+     private String referencia;
+     private char tipoPiso;
+     private String nombrePropietario;
+     private float cuotaFija;
+     private float litrosAguaCaliente;
+     private float pasosDeCalefaccion;
+     private float TotalReciboComunidad;
      
+     //constructores
+     /**
+      * Constructor vacío
+      */
      public Piso(){
      
      }

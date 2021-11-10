@@ -12,20 +12,32 @@ import java.util.ArrayList;
  *
  * @author a20estefaniapc
  */
-public abstract class Cuenta implements Serializable{
-
-    public String numero;
-    public String sucursal;
-    public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-
+public abstract class Cuenta implements Serializable {
+    
+    //atributos
+    private String numero;
+    private String sucursal;
+    private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    private String tipo;
+    
+    //cosntructores
+    /**
+     * Constructor vacío.
+     */
     public Cuenta() {
 
     }
-
-    public Cuenta(String numero, String sucursal,ArrayList<Cliente> clientes) {
+    
+    /**
+     * Constructor
+     * @param numero
+     * @param sucursal
+     * @param clientes 
+     */
+    public Cuenta(String numero, String sucursal, ArrayList<Cliente> clientes) {
         this.numero = numero;
         this.sucursal = sucursal;
-        this.clientes=clientes;
+        this.clientes = clientes;
     }
 
     //getters y setters
@@ -69,6 +81,19 @@ public abstract class Cuenta implements Serializable{
      */
     public void setClientes(ArrayList<Cliente> clientes) {
         this.clientes = clientes;
+    }
+    
+    /**
+     * Indica el tipo de cuenta: plazo o corriente.
+     * @return tipo
+     */
+    public String getTipo() {
+        if (this instanceof CuentaCorriente) {
+            tipo = "CORRIENTE";
+        } else if (this instanceof CuentaPlazo) {
+            tipo = "PLAZO";
+        }
+        return tipo;
     }
 
 }

@@ -13,12 +13,24 @@ import java.util.Date;
  */
 public class Ingreso extends Movimiento {
     
+    //atributos
     private double saldoActual;
-
+    
+    //constructores
+    /**
+     * Contructor vacío
+     */
     public Ingreso() {
         super();
     }
-
+    
+    /**
+     * Constructor
+     * @param cuenta
+     * @param fechaOperacion
+     * @param hora
+     * @param cantidad 
+     */
     public Ingreso(CuentaCorriente cuenta, Date fechaOperacion, Time hora, float cantidad) {
         super(cuenta, fechaOperacion, hora, cantidad);
     }

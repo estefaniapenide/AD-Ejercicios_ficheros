@@ -15,16 +15,27 @@ import java.util.Date;
  */
 public abstract class Movimiento implements Serializable{
     
+    //atributos
     private CuentaCorriente cuenta;
     private Date fechaOperacion;
     private Time hora;
     private float cantidad;
     
-    
+    //constructores
+    /**
+     * Cosntructor vacío.
+     */
     public Movimiento(){
     
     }
     
+    /**
+     * Cosntructor
+     * @param cuenta
+     * @param fechaOperacion
+     * @param hora
+     * @param cantidad 
+     */
     public Movimiento(CuentaCorriente cuenta,Date fechaOperacion, Time hora, float cantidad){
         this.cuenta=cuenta;
         this.fechaOperacion=fechaOperacion;

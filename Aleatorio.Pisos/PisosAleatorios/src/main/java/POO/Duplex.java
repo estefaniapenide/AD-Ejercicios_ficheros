@@ -11,8 +11,13 @@ package POO;
  */
 public class Duplex extends Piso {
     
-    public float cuotaExtra;
+    //atributos
+    private float cuotaExtra;
     
+    //constructores
+    /**
+     * Cosntructor vacío
+     */
     public Duplex(){
     super();
     }
@@ -31,6 +36,7 @@ public class Duplex extends Piso {
         this.cuotaExtra = cuotaExtra;
     }
     
+    @Override
     public float totalRbo(){
         float totalRbo=getCuotaFija()+getLitrosAguaCaliente()*0.4f+getPasosDeCalefaccion()*0.7f+getCuotaExtra();
     return totalRbo;

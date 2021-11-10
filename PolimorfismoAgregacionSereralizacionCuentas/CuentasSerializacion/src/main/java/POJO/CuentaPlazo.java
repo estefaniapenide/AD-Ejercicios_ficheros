@@ -13,15 +13,26 @@ import java.util.Date;
  * @author a20estefaniapc
  */
 public class CuentaPlazo extends Cuenta {
-
-    public float interes;
-    public Date fechaVencimiento;
-    public long depositoPlazo;
-
+    
+    //atributos
+    private float interes;
+    private Date fechaVencimiento;
+    private long depositoPlazo;
+    
+    //constructores
+    /**
+     * Constructor vacío
+     */
     public CuentaPlazo() {
 
     }
-
+    
+    /**
+     * Constructor
+     * @param numero
+     * @param sucursal
+     * @param clientes 
+     */
     public CuentaPlazo(String numero, String sucursal,ArrayList<Cliente> clientes) {
         super(numero, sucursal,clientes);
     }
@@ -70,17 +81,15 @@ public class CuentaPlazo extends Cuenta {
     
      @Override
     public String toString() {
-        String nombresClientes="";
+        String clientes=" ";
         for(Cliente aux : getClientes()){
-        nombresClientes=nombresClientes+aux.getNombre()+"\n";
+        clientes=clientes+aux.getNombre()+", "+aux.getDni()+"\n";
         }
         String cuenta = "\nCUENTA PLAZO"
                 + "\nNúmero de cuenta: " + getNumero()
                 + "\nSucursal: " + getSucursal()
                 + "\nDepósito(€): " + getDepositoPlazo()
-                 + "\nClientes:\n " + nombresClientes + "\n";
-       // + "\nClientes:\n " + getClientes() + "\n";
-
+                 + "\nClientes:\n" + clientes;
         return cuenta;
     }
 
