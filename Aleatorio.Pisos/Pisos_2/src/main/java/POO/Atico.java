@@ -57,5 +57,14 @@ public class Atico extends Piso {
     public int getTamReal() {
         return super.getTamReal() + 4;
     }
+    
+     @Override
+    public String toString() {
+        String duplex = super.toString()
+                + "Terraza(m2): " + getMetrosTerraza() + "\n"
+                + "\tTOTAL RECIBO(€): " + totalRbo() + "\n";
+        return duplex;
+    }
+    
 
 }

@@ -62,19 +62,19 @@ public abstract class Piso {
      */
     public char getTipoPiso() {
         if (this instanceof Atico) {
-            tipoPiso = 'A';
+            this.tipoPiso = 'A';
         } else if (this instanceof Duplex) {
-            tipoPiso = 'D';
+            this.tipoPiso = 'D';
         }
         return tipoPiso;
     }
-    
-     /**
-     * @param tipoPiso the tipoPiso to set
-     */
-    public void setTipoPiso(char tipoPiso) {
-        this.tipoPiso = tipoPiso;
-    }
+
+//    /**
+//     * @param tipoPiso the tipoPiso to set
+//     */
+//    public void setTipoPiso(char tipoPiso) {
+//        this.tipoPiso = tipoPiso;
+//    }
 
     /**
      * @return the nombrePropietario
@@ -154,6 +154,17 @@ public abstract class Piso {
 
     public int getTamReal() {
         return this.referencia.length() * 2 + this.nombrePropietario.length() * 2 + 1 + 4 + 4 + 4 + 4;
+    }
+    
+    @Override
+    public String toString(){
+     String piso= "RECIBO " + getReferencia() + "\n"
+                + "Propietario: " + getNombrePropietario() + "\n"
+                + "Tipo de piso: " + getTipoPiso() + "\n"
+                + "Cuota fija(€): " + getCuotaFija() + "\n"
+                + "Agua caliente(L): " + getLitrosAguaCaliente() + "\n"
+                + "Calefacción: " + getPasosDeCalefaccion() + "\n";
+     return piso;
     }
 
 }

@@ -59,4 +59,12 @@ public class Duplex extends Piso {
         return super.getTamReal() + 4;
     }
 
+    @Override
+    public String toString() {
+        String duplex = super.toString()
+                + "Cuota extra(€): " + getCuotaExtra() + "\n"
+                + "\tTOTAL RECIBO(€): " + totalRbo() + "\n";
+        return duplex;
+    }
+
 }
