@@ -56,6 +56,7 @@ public class Duplex extends Piso {
 
     @Override
     public int getTamReal() {
+        //TamañoReal Piso + float cuotaExtra(4)
         return super.getTamReal() + 4;
     }
 

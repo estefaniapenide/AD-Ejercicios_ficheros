@@ -80,7 +80,7 @@ public class Altas {
             raf.close();
             numRegs++;
         } else {
-            System.out.println("Tamaño Excedido. No es posible dar de alta el piso.");
+            System.out.println("Tamaño Excedido. No es posible dar de alta el piso.\n");
         }
         return numRegs;
 

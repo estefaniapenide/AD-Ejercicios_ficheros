@@ -55,6 +55,7 @@ public class Atico extends Piso {
     
     @Override
     public int getTamReal() {
+        //TamañoReal Piso + float metrosTerraza(4)
         return super.getTamReal() + 4;
     }
     

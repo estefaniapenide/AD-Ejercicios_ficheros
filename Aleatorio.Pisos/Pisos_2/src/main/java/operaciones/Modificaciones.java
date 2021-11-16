@@ -49,15 +49,13 @@ public class Modificaciones {
             } else if (tip == 'D') {
                 piso = new Duplex(ref, nom, cuo, agua, cal, ot);
             }
-
-            //piso.setTipoPiso(tip);
             piso.totalRbo();
 
             if (piso.getReferencia().compareToIgnoreCase(referencia) == 0) {
 
                 b = 1;
                 //Si se modifica el tipo de piso, tambien se cambia el objeto, por lo que instanceof seguirá funcionando
-                modPiso(piso, input);
+                piso = modPiso(piso, input);
 
                 if (piso.getTamReal() <= piso.getTamMax()) {
 
@@ -85,7 +83,7 @@ public class Modificaciones {
 
     }
 
-    private static void modPiso(Piso piso, Scanner input) throws IOException {
+    private static Piso modPiso(Piso piso, Scanner input) throws IOException {
 
         String nombre;
         char tipo;
@@ -107,8 +105,22 @@ public class Modificaciones {
                     break;
                 case 2:
                     System.out.println("Nuevo Tipo de piso:");
-                    tipo = ControlData.leerChar(input);
-                    if (piso.getTipoPiso() == tipo) {//Si el tipo ya es el que tenía no habrá que hacer más cambios
+                    tipo = 'A';
+                    byte tip = 0;
+                    do {
+                        System.out.println(menuTipoPiso());
+                        tip = ControlData.leerByte(input);
+                        switch (tip) {
+                            case 1:
+                                tipo = 'A';
+                                break;
+                            case 2:
+                                tipo = 'D';
+                                break;
+                        }
+                    } while (tip != 2 && tip != 1);
+                    if (piso.getTipoPiso() == tipo) {
+                        //Si el tipo ya es el que tenía no habrá que hacer más cambios
                     } else {
 
                         String ref = piso.getReferencia();
@@ -118,11 +130,13 @@ public class Modificaciones {
                         float cal = piso.getPasosDeCalefaccion();
                         float ot = 0;
                         
+                        //Al hacer el cambio de tipo habrá que crear un piso nuevo del tipo correspondiente
                         if (piso.getTipoPiso() == 'D') {
                             System.out.println("Los datos de CUOTA EXTRA se han borrado pues se trata de un ÁTICO.\n"
                                     + "Introduzca los metros cuadrados de terraza:");
                             ot = ControlData.leerFloat(input);
                             piso = new Atico(ref, nom, cuo, ag, cal, ot);
+
                         } else if (piso.getTipoPiso() == 'A') {
                             System.out.println("Los datos de METROS DE TERRAZA se han borrado pues se trata de un DÚPLEX.\n"
                                     + "Introduzca la cuota extra(€):");
@@ -173,6 +187,7 @@ public class Modificaciones {
             }
         } while (op != 0);
 
+        return piso;
     }
 
     private static String menuModificar() {
@@ -185,6 +200,12 @@ public class Modificaciones {
                 + "\n6.-Metros de terraza/Cuota extra\n"
                 + "\n0.-Volver al menú principal.";
         return menuModificar;
+    }
+
+    private static String menuTipoPiso() {
+        String tipoPiso = "1.-Ático\n"
+                + "2.-Dúplex\n";
+        return tipoPiso;
     }
 
 }

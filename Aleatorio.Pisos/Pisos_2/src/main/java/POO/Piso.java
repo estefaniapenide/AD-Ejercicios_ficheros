@@ -69,13 +69,6 @@ public abstract class Piso {
         return tipoPiso;
     }
 
-//    /**
-//     * @param tipoPiso the tipoPiso to set
-//     */
-//    public void setTipoPiso(char tipoPiso) {
-//        this.tipoPiso = tipoPiso;
-//    }
-
     /**
      * @return the nombrePropietario
      */
@@ -153,12 +146,13 @@ public abstract class Piso {
     }
 
     public int getTamReal() {
+        //String referencia(2*lentgh), String nombrePropietario(2*lentgh), char tipoPiso(1), float cuotaFija(4), float litrosAguaCaliente(4), float pasosDeCalefaccion(4), float totalReciboComunidad(4)
         return this.referencia.length() * 2 + this.nombrePropietario.length() * 2 + 1 + 4 + 4 + 4 + 4;
     }
     
     @Override
     public String toString(){
-     String piso= "RECIBO " + getReferencia() + "\n"
+     String piso= "PISO " + getReferencia() + "\n"
                 + "Propietario: " + getNombrePropietario() + "\n"
                 + "Tipo de piso: " + getTipoPiso() + "\n"
                 + "Cuota fija(€): " + getCuotaFija() + "\n"

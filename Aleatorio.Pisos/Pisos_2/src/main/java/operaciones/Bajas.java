@@ -84,10 +84,10 @@ public class Bajas {
         temporal.renameTo(fichero);
 
         if (b == numRegs) {
-            System.out.println("\nRECIBO NO ENCONTRADO");
+            System.out.println("PISO NO ENCONTRADO\n");
 
         } else {
-            System.out.println("\nRECIBO BORRADO");
+            System.out.println("PISO BORRADO\n");
             numRegs--;
         }
         return numRegs;
