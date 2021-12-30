@@ -25,7 +25,7 @@ public class MiObjectInputStream extends ObjectInputStream{
     
     @Override
     protected void readStreamHeader() throws IOException {
-        
+       
     }
     
 }
